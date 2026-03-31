@@ -1,0 +1,61 @@
+version: "1.0"
+agent_id: "daily-weather-telegram"
+agent_name: "Daily Weather Telegram Bot"
+
+tables:
+  result_weather_deliveries:
+    description: "Tracks each weather report delivery with basic weather snapshot for audit trail"
+    columns:
+      id:
+        type: uuid
+        primary_key: true
+        description: "Auto-generated primary key"
+      run_id:
+        type: uuid
+        required: true
+        description: "Agent run ID that produced this record"
+      computed_at:
+        type: datetime
+        required: true
+        description: "Timestamp when this record was created"
+      location:
+        type: string
+        max_length: 255
+        required: true
+        description: "Location the forecast was for"
+      forecast_date:
+        type: string
+        max_length: 10
+        required: true
+        description: "Date of the forecast (YYYY-MM-DD format)"
+      temperature_high:
+        type: float
+        required: false
+        description: "High temperature in Celsius"
+      temperature_low:
+        type: float
+        required: false
+        description: "Low temperature in Celsius"
+      conditions:
+        type: string
+        max_length: 255
+        required: false
+        description: "Weather condition summary (e.g., 'Partly cloudy')"
+      precipitation_chance:
+        type: float
+        required: false
+        description: "Chance of precipitation (percentage)"
+      wind_speed:
+        type: float
+        required: false
+        description: "Wind speed in km/h"
+      delivered_at:
+        type: datetime
+        required: true
+        description: "When the message was sent to Telegram"
+      delivery_status:
+        type: string
+        max_length: 50
+        required: true
+        description: "success or failed"
+    conflict_columns: []

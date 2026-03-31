@@ -1,0 +1,18 @@
+{
+  "name": "daily-weather",
+  "schedule": {
+    "kind": "cron",
+    "expr": "30 2 * * *",
+    "tz": "UTC"
+  },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Run the daily weather report workflow",
+    "timeoutSeconds": 300
+  },
+  "delivery": {
+    "mode": "none"
+  },
+  "sessionTarget": "isolated",
+  "enabled": true
+}

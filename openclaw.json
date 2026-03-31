@@ -1,0 +1,41 @@
+{
+  "name": "daily-weather-telegram",
+  "version": "1.0.0",
+  "description": "Daily weather forecast agent that sends reports to Telegram at 8:00 AM IST",
+  "agent_metadata": {
+    "agent_name": "Daily Weather Telegram Bot",
+    "agent_id": "daily-weather-telegram",
+    "avatar": "🌤️",
+    "tone": "Friendly and informative",
+    "domain": "Weather & Notifications",
+    "primary_users": "Personal users wanting daily weather updates",
+    "automation_type": "data_pipeline",
+    "schedule_description": "Daily at 8:00 AM IST (2:30 AM UTC)",
+    "cron_expression": "30 2 * * *"
+  },
+  "skills": [
+    "data-writer",
+    "weather-fetcher",
+    "weather-formatter",
+    "telegram-delivery",
+    "result-query"
+  ],
+  "workflows": {
+    "main": "workflows/main.yaml"
+  },
+  "cron": {
+    "daily-weather": "cron/daily-weather.json"
+  },
+  "env": {
+    "required": [
+      "TELEGRAM_BOT_TOKEN",
+      "TELEGRAM_CHAT_ID",
+      "LOCATION"
+    ],
+    "optional": [
+      "PG_CONNECTION_STRING",
+      "ORG_ID",
+      "AGENT_ID"
+    ]
+  }
+}

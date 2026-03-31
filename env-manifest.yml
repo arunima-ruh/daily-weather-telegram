@@ -1,0 +1,61 @@
+version: "1.0"
+agent_id: "daily-weather-telegram"
+agent_name: "Daily Weather Telegram Bot"
+
+categories:
+  - category: "connector"
+    label: "Connectors"
+    groups:
+      - name: "Weather"
+        icon: "🌤️"
+        description: "Weather data source configuration"
+        vars:
+          - key: LOCATION
+            label: "Location"
+            required: true
+            secret: false
+            default: "Delhi"
+            placeholder: "e.g., Delhi, Mumbai, New York"
+            help: "City name for weather forecast"
+
+  - category: "channel"
+    label: "Channels"
+    groups:
+      - name: "Telegram"
+        icon: "📱"
+        description: "Daily weather report delivery via Telegram"
+        vars:
+          - key: TELEGRAM_BOT_TOKEN
+            label: "Bot Token"
+            required: true
+            secret: true
+            help: "Get from @BotFather on Telegram"
+          - key: TELEGRAM_CHAT_ID
+            label: "Chat ID"
+            required: true
+            secret: false
+            help: "Get from @userinfobot or your group/channel settings"
+
+  - category: "infrastructure"
+    label: "Infrastructure"
+    groups:
+      - name: "Database"
+        icon: "🗄️"
+        description: "PostgreSQL for delivery audit trail (optional — agent works without it)"
+        vars:
+          - key: PG_CONNECTION_STRING
+            label: "Connection String"
+            required: false
+            secret: true
+            placeholder: "postgresql://user:pass@host:5432/dbname"
+          - key: ORG_ID
+            label: "Organisation ID"
+            required: false
+            secret: false
+            default: "default"
+          - key: AGENT_ID
+            label: "Agent ID"
+            required: false
+            secret: false
+            auto_fill: true
+            default: "daily-weather-telegram"
