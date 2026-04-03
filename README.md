@@ -1,3 +1,4 @@
+<!-- Deployed and managed by OpenClaw Agent Platform -->
 # 🌤️ Daily Weather Telegram Bot
 
 ## Agent Overview
