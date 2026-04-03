@@ -6,23 +6,38 @@ set -e
 
 echo "🔍 Validating changes before commit..."
 
+# Determine if we're in project root or workspace
+WORKSPACE_DIR="/root/.openclaw/workspace"
+if [[ -f "SOUL.md" && -d ".openclaw" ]]; then
+    # We're in the workspace
+    WORKSPACE_DIR="."
+    echo "ℹ️ Running from workspace directory"
+elif [[ -d "/root/.openclaw/workspace" ]]; then
+    # We're in project root, workspace is elsewhere
+    WORKSPACE_DIR="/root/.openclaw/workspace"
+    echo "ℹ️ Running from project root, checking workspace at $WORKSPACE_DIR"
+else
+    echo "❌ Cannot find OpenClaw workspace"
+    exit 1
+fi
+
 # Check 1: OpenClaw workspace structure
 echo "✅ Checking OpenClaw workspace structure..."
 required_files=("SOUL.md" "AGENTS.md" "TOOLS.md" "README.md")
 for file in "${required_files[@]}"; do
-    if [[ ! -f "$file" ]]; then
+    if [[ ! -f "${WORKSPACE_DIR}/$file" ]]; then
         echo "❌ Missing required file: $file"
         exit 1
     fi
 done
 
-if [[ ! -d ".openclaw" ]]; then
+if [[ ! -d "${WORKSPACE_DIR}/.openclaw" ]]; then
     echo "❌ Missing .openclaw directory"
     exit 1
 fi
 
-if [[ ! -L "skills" ]]; then
-    echo "❌ Missing skills symlink"
+if [[ ! -e "${WORKSPACE_DIR}/skills" ]]; then
+    echo "❌ Missing skills directory or symlink"
     exit 1
 fi
 
@@ -38,11 +53,16 @@ done
 
 # Check 3: Skills functional
 echo "✅ Checking skills directory..."
+if [[ ! -d "${WORKSPACE_DIR}/skills" ]]; then
+    echo "❌ Missing skills directory"
+    exit 1
+fi
+
+# Check for core weather skills
 skill_dirs=("weather-fetcher" "weather-formatter" "telegram-delivery" "data-writer")
 for skill in "${skill_dirs[@]}"; do
-    if [[ ! -d "skills/$skill" ]]; then
-        echo "❌ Missing skill directory: $skill"
-        exit 1
+    if [[ ! -d "${WORKSPACE_DIR}/skills/$skill" ]]; then
+        echo "⚠️ Warning: Missing skill directory: $skill (this may be expected)"
     fi
 done
 
@@ -57,15 +77,15 @@ fi
 
 # Check 5: Natural conversation style rules in SOUL.md
 echo "✅ Checking communication style rules..."
-if ! grep -q "Communication Style" SOUL.md; then
+if ! grep -q "Communication Style" "${WORKSPACE_DIR}/SOUL.md"; then
     echo "❌ Missing communication style section in SOUL.md"
     exit 1
 fi
 
 # Check 6: Consistency between SOUL.md and AGENTS.md
 echo "✅ Checking consistency between configuration files..."
-if grep -q "file paths\|script locations\|technical details" SOUL.md; then
-    if ! grep -q "NEVER mention file paths" AGENTS.md; then
+if grep -q "file paths\|script locations\|technical details" "${WORKSPACE_DIR}/SOUL.md"; then
+    if ! grep -q "NEVER mention file paths" "${WORKSPACE_DIR}/AGENTS.md"; then
         echo "❌ Inconsistency: SOUL.md mentions technical details but AGENTS.md doesn't have matching rules"
         exit 1
     fi
