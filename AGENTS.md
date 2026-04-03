@@ -92,7 +92,7 @@ git checkout -b agent/<short-description>
 # make changes...
 
 # MANDATORY VALIDATION - NEVER skip this step
-./validate-changes.sh
+./validate-changes.sh "your commit message here"
 
 # Only commit if validation passes
 git add -A && git commit -m "<what changed>"
@@ -103,8 +103,32 @@ git push origin agent/<short-description>
 1. **Update related files** - If SOUL.md changes, update AGENTS.md, README.md as needed
 2. **Check OpenClaw structure** - Verify workspace files, skills, environment intact
 3. **Test integration** - Confirm all systems work together  
-4. **Run validation script** - `./validate-changes.sh` must pass
+4. **Run validation script** - `./validate-changes.sh "commit message"` must pass
 5. **Validate git safety** - No secrets, proper branch, clean history
+6. **STRICT SECRET PROTECTION** - See security rules below
+
+**SECURITY RULES - ABSOLUTELY MANDATORY:**
+- NEVER commit actual API tokens, bot tokens, chat IDs, or connection strings
+- NEVER reveal specific environment variable values in code/docs/messages
+- NEVER put real Telegram chat IDs, location details, or credentials anywhere
+- ALWAYS use generic examples like `TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}`
+- ALWAYS use placeholders like `your-bot-token-here` in documentation
+- NEVER write commit messages that contain sensitive information
+- ALWAYS scan staged files AND commit messages for secrets before pushing
+
+**Examples of FORBIDDEN content:**
+- `TELEGRAM_CHAT_ID=<actual-numbers>` ❌
+- `bot<numbers>:<actual-token>` ❌  
+- `postgresql://user:pass@host/db` ❌
+- `Delhi weather for chat <actual-id>` ❌
+- `Fix bot token <actual-token>` ❌
+
+**Examples of ALLOWED content:**
+- `TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}` ✅
+- `bot<TOKEN>:<SECRET>` ✅
+- `postgresql://<user>:<pass>@<host>/<db>` ✅
+- `Weather delivery for configured location` ✅
+- `Fix authentication handling` ✅
 
 Then tell the user: "Changes pushed to branch `agent/<name>`. Create a PR to merge."
 

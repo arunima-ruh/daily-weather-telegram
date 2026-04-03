@@ -47,6 +47,7 @@ All config via environment variables:
 2. **Check OpenClaw structure** - Verify workspace files, skills, environment intact
 3. **Test integration** - Confirm all systems work together
 4. **Validate git safety** - No secrets, proper branch, clean history
+5. **STRICT SECRET PROTECTION** - Absolutely mandatory security rules
 
 **Git Workflow:**
 ```bash
@@ -55,13 +56,34 @@ git checkout -b agent/<description>
 
 # Make changes...
 
-# VALIDATION REQUIRED:
-./validate-changes.sh  # (or manual validation steps)
+# VALIDATION REQUIRED (checks secrets in files AND commit message):
+./validate-changes.sh "your proposed commit message"
 
 # Commit only after validation passes
 git add -A && git commit -m "<what changed>"
 git push origin agent/<description>
 ```
+
+**SECURITY RULES - ZERO TOLERANCE:**
+
+❌ **NEVER commit these:**
+- Actual API tokens, bot tokens, chat IDs
+- Real database connection strings  
+- Specific environment variable values
+- Location details or user identifiers
+- Any secrets in code, comments, docs, or commit messages
+
+✅ **ALWAYS use these instead:**
+- Generic placeholders: `TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}`
+- Example formats: `bot<TOKEN>:<SECRET>`
+- Environment references: `configured location`
+- Safe descriptions: `Fix authentication handling`
+
+**The validation script will REJECT commits that contain:**
+- Chat IDs with actual numbers
+- Bot tokens with real values
+- Connection strings with real credentials
+- Commit messages revealing sensitive data
 
 ### Validation Checklist
 
