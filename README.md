@@ -1,178 +1,96 @@
-# 🌤️ Daily Weather Telegram Bot
+# Daily Weather Telegram Bot 🌤️
 
-## Agent Overview
+Autonomous weather forecast delivery agent for Delhi → Telegram.
 
-| Field            | Value                          |
-|------------------|--------------------------------|
-| **Agent Name**   | Daily Weather Telegram Bot     |
-| **Agent ID**     | `daily-weather-telegram`       |
-| **Version**      | 1.0.0                          |
-| **Avatar**       | 🌤️                             |
-| **Tone**         | Friendly and informative       |
-| **Scope**        | Daily weather forecast delivery for Delhi via Telegram |
-| **Automation Type** | Data pipeline with scheduled delivery |
-| **Schedule**     | Daily at 8:00 AM IST (2:30 AM UTC) |
+## What This Does
 
-## Greeting Message
-
-```
-🌤️ Hi! I'm your Daily Weather Bot. I send weather forecasts for Delhi every morning at 8:00 AM IST.
-
-You can also ask me about past weather reports anytime!
-```
-
-## Agent File Structure
-
-```
-daily-weather-telegram/
-├── README.md
-├── openclaw.json
-├── result-schema.yml
-├── requirements.txt
-├── .env.example
-├── env-manifest.yml
-├── .gitignore
-├── check-environment.sh
-├── install-dependencies.sh
-├── test-workflow.sh
-├── scripts/
-│   └── data_writer.py
-├── cron/
-│   └── daily-weather.json
-├── workspace/
-│   ├── SOUL.md
-│   ├── 01_IDENTITY.md
-│   ├── 02_RULES.md
-│   ├── 03_SKILLS.md
-│   ├── 04_TRIGGERS.md
-│   ├── 05_ACCESS.md
-│   ├── 06_WORKFLOW.md
-│   ├── 07_REVIEW.md
-│   └── skills/
-│       ├── data-writer/
-│       ├── weather-fetcher/
-│       ├── weather-formatter/
-│       ├── telegram-delivery/
-│       └── result-query/
-├── skills/ (top-level copies)
-└── workflows/
-    └── main.yaml
-```
-
-## Quick Stats
-
-| Metric              | Count            |
-|---------------------|-----------------|
-| Custom Rules         | 7               |
-| Total Skills         | 5               |
-| Skills (Auto)        | 5               |
-| Skills (HiTL)        | 0               |
-| Scheduled Triggers   | 1               |
-| Native Tools Used    | 2 (WebSearch, message) |
+- Fetches daily weather forecasts for Delhi
+- Sends formatted reports to your Telegram chat  
+- Runs automatically at 8:00 AM IST
+- Logs delivery history to database
 
 ## Quick Start
 
-### 1. Prerequisites
+1. **Environment configured** - All variables are pre-set via deployment
+2. **Cron scheduled** - Runs daily at `30 2 * * *` UTC (8:00 AM IST)
+3. **Skills ready** - Weather fetching, formatting, and delivery
 
-- Python 3.8+
-- `jq` (JSON processor)
-- Telegram bot token (from @BotFather)
-- Telegram chat ID (from @userinfobot)
+## Manual Trigger
 
-### 2. Setup
+Send: "Run the daily weather report workflow" to trigger on-demand.
 
+## Skills Overview
+
+| Skill | Purpose |
+|---|---|
+| `weather-fetcher` | Get forecast via WebSearch |
+| `weather-formatter` | Format into readable message |
+| `telegram-delivery` | Send to Telegram + log to DB |
+| `data-writer` | Database operations |
+| `result-query` | Historical delivery queries |
+
+## Configuration
+
+All config via environment variables:
+- `LOCATION` - Weather location (Delhi)
+- `TELEGRAM_CHAT_ID` - Target chat
+- `TELEGRAM_BOT_TOKEN` - Bot credentials
+- `PG_CONNECTION_STRING` - Database (optional)
+
+## Development
+
+### Making Changes
+
+**REQUIRED VALIDATION STEPS:**
+
+1. **Update related files** - If SOUL.md changes, update AGENTS.md, README.md as needed
+2. **Check OpenClaw structure** - Verify workspace files, skills, environment intact
+3. **Test integration** - Confirm all systems work together
+4. **Validate git safety** - No secrets, proper branch, clean history
+
+**Git Workflow:**
 ```bash
-# Clone the repository
-git clone <repo-url>
-cd daily-weather-telegram
+cd ${PROJECT_ROOT}
+git checkout -b agent/<description>
 
-# Install dependencies
-./install-dependencies.sh
+# Make changes...
 
-# Configure environment
-cp .env.example .env
-# Edit .env with your Telegram credentials
+# VALIDATION REQUIRED:
+./validate-changes.sh  # (or manual validation steps)
+
+# Commit only after validation passes
+git add -A && git commit -m "<what changed>"
+git push origin agent/<description>
 ```
 
-### 3. Test
+### Validation Checklist
 
-```bash
-# Check environment
-./check-environment.sh
+Before any commit:
 
-# Run test workflow
-./test-workflow.sh
+- [ ] All configuration files updated consistently  
+- [ ] OpenClaw workspace structure intact
+- [ ] Environment variables still accessible
+- [ ] Skills still functional
+- [ ] No secrets in git history
+- [ ] Natural conversation style maintained
+- [ ] Integration tested
+
+**Never push to main/master** - Always use feature branches.
+
+## Project Structure
+
+```
+/root/.openclaw/workspace/
+├── SOUL.md          # Personality & workflow rules
+├── AGENTS.md        # Operating manual
+├── TOOLS.md         # Tool configuration
+├── README.md        # This file
+├── skills/          # Weather processing skills
+└── .openclaw/       # OpenClaw workspace state
 ```
 
-### 4. Deploy
+## Support
 
-Add the cron job to your OpenClaw config or deploy as a standalone agent.
-
-## Environment Variables
-
-### Required
-
-| Variable | Description | Example |
-|---|---|---|
-| `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather | `123456:ABC-DEF...` |
-| `TELEGRAM_CHAT_ID` | Chat ID for delivery | `-1001234567890` |
-
-### Optional
-
-| Variable | Description | Default |
-|---|---|---|
-| `LOCATION` | City for weather forecast | `Delhi` |
-| `PG_CONNECTION_STRING` | PostgreSQL for audit trail | Not set (disabled) |
-| `ORG_ID` | Organisation ID | `default` |
-| `AGENT_ID` | Agent ID | `daily-weather-telegram` |
-
-## Features
-
-✅ **Daily Weather Forecast** — Automatic delivery at 8:00 AM IST  
-✅ **Native Tools** — Uses WebSearch and message() (no external API keys)  
-✅ **Audit Trail** — Optional PostgreSQL logging of deliveries  
-✅ **Query History** — Ask "Show last 5 weather reports"  
-✅ **Error Handling** — Graceful degradation if database unavailable  
-
-## Usage
-
-### Scheduled Delivery
-
-The agent runs automatically every day at 8:00 AM IST via cron.
-
-### Manual Trigger
-
-Send a message to the agent:
-```
-Run the daily weather report workflow
-```
-
-### Query History
-
-Ask the agent:
-```
-Show last 5 weather reports
-```
-
-## Troubleshooting
-
-### No Telegram message received
-
-- Check `TELEGRAM_BOT_TOKEN` is valid
-- Check `TELEGRAM_CHAT_ID` is correct
-- Check bot is added to the chat (if using group/channel)
-
-### Database errors
-
-- Database is optional — agent works without it
-- If PG configured, verify `PG_CONNECTION_STRING` format
-- Check database is reachable from agent host
-
-### Wrong timezone
-
-- Cron runs at 2:30 AM UTC = 8:00 AM IST
-- Adjust cron expression if needed for different timezone
-
-## License
-
-MIT
+- OpenClaw docs: https://docs.openclaw.ai
+- Source: https://github.com/openclaw/openclaw
+- Community: https://discord.com/invite/clawd
