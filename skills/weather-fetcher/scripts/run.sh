@@ -3,7 +3,7 @@ set -euo pipefail
 
 # ── Env Vars ──────────────────────────────────────────────────────────────────
 : "${RUN_ID:?ERROR: RUN_ID not set}"
-: "${LOCATION:=Delhi}"
+: "${LOCATION:=SASARAM}"
 
 # ── File Paths ────────────────────────────────────────────────────────────────
 OUTPUT_FILE="/tmp/weather_${RUN_ID}.json"

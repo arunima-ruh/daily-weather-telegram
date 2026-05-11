@@ -9,14 +9,14 @@
 | **Version**      | 1.0.0                          |
 | **Avatar**       | 🌤️                             |
 | **Tone**         | Friendly and informative       |
-| **Scope**        | Daily weather forecast delivery for Delhi via Telegram |
+| **Scope**        | Daily weather forecast delivery for SASARAM via Telegram |
 | **Automation Type** | Data pipeline with scheduled delivery |
 | **Schedule**     | Daily at 8:00 AM IST (2:30 AM UTC) |
 
 ## Greeting Message
 
 ```
-🌤️ Hi! I'm your Daily Weather Bot. I send weather forecasts for Delhi every morning at 8:00 AM IST.
+🌤️ Hi! I'm your Daily Weather Bot. I send weather forecasts for SASARAM every morning at 8:00 AM IST.
 
 You can also ask me about past weather reports anytime!
 ```
@@ -121,7 +121,7 @@ Add the cron job to your OpenClaw config or deploy as a standalone agent.
 
 | Variable | Description | Default |
 |---|---|---|
-| `LOCATION` | City for weather forecast | `Delhi` |
+| `LOCATION` | City for weather forecast | `SASARAM` |
 | `PG_CONNECTION_STRING` | PostgreSQL for audit trail | Not set (disabled) |
 | `ORG_ID` | Organisation ID | `default` |
 | `AGENT_ID` | Agent ID | `daily-weather-telegram` |

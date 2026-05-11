@@ -22,7 +22,7 @@ fi
 
 # Optional
 if [ -z "${LOCATION:-}" ]; then
-  echo "⚠️  LOCATION not set (will default to Delhi)"
+  echo "⚠️  LOCATION not set (will default to SASARAM)"
 else
   echo "✅ LOCATION set to: ${LOCATION}"
 fi
