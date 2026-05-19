@@ -14,8 +14,8 @@ categories:
             label: "Location"
             required: true
             secret: false
-            default: "Delhi"
-            placeholder: "e.g., Delhi, Mumbai, New York"
+            default: "Sasaram"
+            placeholder: "e.g., Sasaram, Mumbai, New York"
             help: "City name for weather forecast"
 
   - category: "channel"

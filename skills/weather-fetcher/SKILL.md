@@ -1,7 +1,7 @@
 ---
 name: weather-fetcher
 version: 1.0.0
-description: "Fetches daily weather forecast for Delhi using WebSearch tool"
+description: "Fetches daily weather forecast for Sasaram using WebSearch tool"
 user-invocable: false
 metadata:
   openclaw:
@@ -17,7 +17,7 @@ Fetches weather data using OpenClaw's native WebSearch tool (no API key required
 
 ## Input
 
-None (reads LOCATION from environment, defaults to "Delhi")
+None (reads LOCATION from environment, defaults to "Sasaram")
 
 ## Output
 
@@ -25,7 +25,7 @@ None (reads LOCATION from environment, defaults to "Delhi")
 
 ```json
 {
-  "location": "Delhi",
+  "location": "Sasaram",
   "date": "2026-03-31",
   "temperature_high": 32,
   "temperature_low": 21,

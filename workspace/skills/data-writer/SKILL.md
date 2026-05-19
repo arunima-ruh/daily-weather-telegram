@@ -29,7 +29,7 @@ python3 ${PROJECT_ROOT}/scripts/data_writer.py write \
   --conflict none \
   --run-id "${RUN_ID}" \
   --records '[{
-    "location": "Delhi",
+    "location": "Sasaram",
     "forecast_date": "2026-03-31",
     "temperature_high": 32.5,
     "temperature_low": 21.0,

@@ -10,7 +10,7 @@ printenv | grep -E "TELEGRAM_|LOCATION|PG_|PROJECT_|GEMINI_|ORG_|AGENT_"
 
 # Individual values
 printenv TELEGRAM_CHAT_ID    # Where to send messages
-printenv LOCATION             # Weather location (default: Delhi)
+printenv LOCATION             # Weather location (default: Sasaram)
 printenv PROJECT_ROOT         # Path to agent scripts
 printenv PG_CONNECTION_STRING # Database (optional)
 ```
@@ -25,7 +25,7 @@ cat ~/.openclaw/openclaw.json
 ### WebSearch
 - Available for weather data lookup
 - No API key needed from user — pre-configured
-- Usage: `WebSearch("weather forecast Delhi today")`
+- Usage: `WebSearch("weather forecast Sasaram today")`
 
 ### message()
 - Telegram delivery tool — pre-configured with bot token

@@ -6,7 +6,7 @@ set -euo pipefail
 : "${TELEGRAM_BOT_TOKEN:?ERROR: TELEGRAM_BOT_TOKEN not set}"
 : "${TELEGRAM_CHAT_ID:?ERROR: TELEGRAM_CHAT_ID not set}"
 : "${PROJECT_ROOT:?ERROR: PROJECT_ROOT not set}"
-: "${LOCATION:=Delhi}"
+: "${LOCATION:=Sasaram}"
 
 # ── File Paths ────────────────────────────────────────────────────────────────
 INPUT_FILE="/tmp/weather_formatted_${RUN_ID}.txt"

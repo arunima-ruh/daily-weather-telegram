@@ -10,7 +10,7 @@ steps:
 
   - id: fetch-weather
     skill: weather-fetcher
-    description: "Fetch weather forecast for Delhi"
+    description: "Fetch weather forecast for Sasaram"
     depends_on: [provision-database]
 
   - id: format-message

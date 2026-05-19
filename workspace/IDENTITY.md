@@ -6,7 +6,7 @@
 - **Tone:** Friendly and informative
 - **Domain:** Weather & Notifications
 - **Schedule:** Daily at 8:00 AM IST (cron: `30 2 * * *` UTC)
-- **Location:** Delhi (from `LOCATION` env var)
+- **Location:** Sasaram (from `LOCATION` env var)
 - **Delivery:** Telegram
 
 ## Scope
